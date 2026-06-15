@@ -15,14 +15,14 @@ import settingIcon from '../../assets/setting.png';
 import pdfIcon from '../../assets/pdf.png';
 
 export const APPS = [
-  { id: 'about', name: 'About Me', icon: folderIcon },
-  { id: 'projects', name: 'Projects', icon: folderIcon },
-  { id: 'skills', name: 'Skills', icon: folderIcon },
-  { id: 'experience', name: 'Experience', icon: folderIcon },
-  { id: 'resume', name: 'Resume.pdf', icon: pdfIcon },
-  { id: 'contact', name: 'Contact', icon: folderIcon },
-  { id: 'terminal', name: 'Terminal', icon: terminalIcon },
-  { id: 'settings', name: 'Settings', icon: settingIcon },
+  { id: 'about',      name: 'About Me',   icon: folderIcon,   emoji: '👤' },
+  { id: 'projects',   name: 'Projects',   icon: folderIcon,   emoji: '📁' },
+  { id: 'skills',     name: 'Skills',     icon: folderIcon,   emoji: '⚡' },
+  { id: 'experience', name: 'Experience', icon: folderIcon,   emoji: '💼' },
+  { id: 'resume',     name: 'Resume.pdf', icon: pdfIcon,      emoji: '📋' },
+  { id: 'contact',    name: 'Contact',    icon: folderIcon,   emoji: '✉️' },
+  { id: 'terminal',   name: 'Terminal',   icon: terminalIcon, emoji: '🖥️' },
+  { id: 'settings',   name: 'Settings',   icon: settingIcon,  emoji: '⚙️' },
 ];
 
 export const Desktop: React.FC = () => {
