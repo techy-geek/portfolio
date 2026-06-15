@@ -1,15 +1,35 @@
 import React from 'react';
 
 const EXPERIENCE_DATA = [
-  { role: 'Senior Software Engineer', company: 'TechNova Solutions', location: 'San Francisco, CA (Remote)', period: 'Jan 2023 – Present', color: '#0078d4', emoji: '🏢', highlights: ['Architected and deployed a highly scalable microservices platform using Node.js and Docker.', 'Reduced initial page load time by 40% through Next.js SSR and strategic caching.', 'Mentored 3 junior developers and led weekly engineering learning sessions.'] },
-  { role: 'Full Stack Developer', company: 'CloudScale Inc', location: 'New York, NY', period: 'Mar 2020 – Dec 2022', color: '#744da9', emoji: '☁️', highlights: ['Developed and maintained multiple React-based dashboards for enterprise clients.', 'Integrated Stripe payment gateway, handling over $1M in monthly transactions.', 'Migrated legacy monolithic backend to serverless AWS Lambda functions.'] },
-  { role: 'Frontend Web Intern', company: 'Creative Web Agency', location: 'Austin, TX', period: 'Jun 2019 – Feb 2020', color: '#107c10', emoji: '🎨', highlights: ['Built responsive, pixel-perfect landing pages using HTML, CSS, and vanilla JavaScript.', 'Collaborated with the design team to ensure UI consistency and accessibility standards.'] },
+  {
+    role: 'Web Developer Intern',
+    company: 'Underrated Academia',
+    location: 'Remote',
+    period: 'Mar 2026 – Present',
+    color: '#0078d4',
+    highlights: [
+      'Optimized complex SQL queries and database schemas, improving query performance by 30% and reducing server response time.',
+      'Implemented Docker-based containerization and GitLab CI/CD pipelines, enabling seamless deployments and reducing release time.',
+    ],
+  },
+  {
+    role: 'Web Developer',
+    company: 'ICRAME-2026',
+    location: 'On-site',
+    period: 'April 2026 – Present',
+    color: '#744da9',
+    highlights: [
+      'Developed and maintained the official international conference website, providing centralized access to event details, schedules, and announcements.',
+      'Designed responsive and user-friendly interfaces using HTML5, CSS3, and JavaScript.',
+      'Supported 2,500+ website visitors, ensuring reliable performance and smooth user experience throughout the event lifecycle.',
+    ],
+  },
 ];
 
 export const Experience: React.FC = () => (
   <div className="h-full win-scrollbar overflow-y-auto win-app-body" style={{ background: 'var(--app-bg)' }}>
     <div style={{ height: '40px', background: 'var(--app-toolbar)', borderBottom: '1px solid var(--app-toolbar-border)', display: 'flex', alignItems: 'center', padding: '0 16px', flexShrink: 0 }}>
-      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--app-text)' }}>💼 Work Experience</span>
+      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--app-text)' }}>Work Experience</span>
     </div>
     <div className="win-app-content" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {EXPERIENCE_DATA.map((exp, idx) => (
@@ -19,7 +39,6 @@ export const Experience: React.FC = () => (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px', flexWrap: 'wrap', gap: '8px' }}>
               <div style={{ minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px', flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: '16px' }}>{exp.emoji}</span>
                   <h2 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--app-text)' }}>{exp.role}</h2>
                 </div>
                 <p style={{ margin: 0, fontSize: '12px', color: 'var(--app-text-sec)', fontWeight: 500 }}>{exp.company}</p>

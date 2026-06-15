@@ -18,7 +18,7 @@ export const Resume: React.FC = () => {
     setNumPages(numPages);
   }
 
-  const pdfFile = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+  const pdfFile = '/Resume_Anurag_Sharma.pdf';
 
   return (
     <div
@@ -37,7 +37,7 @@ export const Resume: React.FC = () => {
         padding: '8px 14px',
         flexShrink: 0,
       }}>
-        <span style={{ fontSize: '13px', fontWeight: 600, color: '#1c1c1c' }}>📋 Resume.pdf</span>
+        <span style={{ fontSize: '13px', fontWeight: 600, color: '#1c1c1c' }}>Resume_Anurag_Sharma.pdf</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}>
           <button
             className="win-btn"
@@ -59,12 +59,13 @@ export const Resume: React.FC = () => {
             <ZoomIn size={14} />
           </button>
           <div style={{ width: '1px', height: '20px', background: 'rgba(0,0,0,0.12)', margin: '0 6px' }} />
-          <button className="win-btn" style={{ padding: '4px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }} title="Print">
+          <button className="win-btn" style={{ padding: '4px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }} title="Print"
+            onClick={() => window.open(pdfFile, '_blank')}>
             <Printer size={14} /> Print
           </button>
           <a
             href={pdfFile}
-            download
+            download="Resume_Anurag_Sharma.pdf"
             className="win-btn win-btn-accent"
             style={{ padding: '4px 12px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}
           >

@@ -4,7 +4,7 @@ import { useWindowStore } from '../../store/useWindowStore';
 interface DesktopIconProps {
   id: string;
   name: string;
-  icon: string; // path to the icon image
+  icon: string; 
   isSelected?: boolean;
   onSelect?: () => void;
   onDeselect?: () => void;
@@ -15,13 +15,6 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
 }) => {
   const openWindow = useWindowStore((state) => state.openWindow);
   const [hovered, setHovered] = useState(false);
-
-  /* Windows 11 desktop icon layout:
-     - No colored background tile
-     - Icon image directly on the desktop (48×48)
-     - Subtle highlight rectangle on hover/select
-     - White text label with shadow, center-aligned below icon  */
-
   const bgStyle: React.CSSProperties = isSelected
     ? {
         background: 'rgba(0, 103, 192, 0.30)',
@@ -48,7 +41,16 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={(e) => { e.stopPropagation(); onSelect?.(); }}
+      onClick={(e) => {
+        e.stopPropagation();
+        const isTouchOrMobile = window.innerWidth < 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+        if (isTouchOrMobile) {
+          openWindow(id, name, name);
+          onDeselect?.();
+        } else {
+          onSelect?.();
+        }
+      }}
       onDoubleClick={(e) => { e.stopPropagation(); openWindow(id, name, name); onDeselect?.(); }}
     >
       {/* Icon image — Windows 11 style: directly rendered, no tile background */}

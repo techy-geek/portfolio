@@ -6,8 +6,6 @@ import { Projects }       from '../../apps/Projects/Projects';
 import { Resume }         from '../../apps/Resume/Resume';
 import { Skills }         from '../../apps/Skills/Skills';
 import { Experience }     from '../../apps/Experience/Experience';
-import { Publications }   from '../../apps/Publications/Publications';
-import { Certifications } from '../../apps/Certifications/Certifications';
 import { Contact }        from '../../apps/Contact/Contact';
 import { Terminal }       from '../../apps/Terminal/Terminal';
 import { Settings }       from '../../apps/Settings/Settings';
@@ -22,8 +20,6 @@ export const WindowManager: React.FC = () => {
       case 'resume':         return <Resume />;
       case 'skills':         return <Skills />;
       case 'experience':     return <Experience />;
-      case 'publications':   return <Publications />;
-      case 'certifications': return <Certifications />;
       case 'contact':        return <Contact />;
       case 'terminal':       return <Terminal />;
       case 'settings':       return <Settings />;

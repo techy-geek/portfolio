@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSettingsStore, WALLPAPERS } from '../../store/useSettingsStore';
+import profileImg from '../../assets/profile.png';
 
 /* ═══════════════════════════════════════════════════════════
    Types
@@ -84,6 +86,11 @@ const BootScreen: React.FC<{ onDone: () => void }> = ({ onDone }) => {
 const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
   const now   = useClock();
   const [hintVisible, setHintVisible] = useState(false);
+  const { wallpaperId } = useSettingsStore();
+  const wallpaper = WALLPAPERS.find(w => w.id === wallpaperId) ?? WALLPAPERS[0];
+  const bgStyle = wallpaper.css
+    ? { background: wallpaper.value }
+    : { backgroundImage: wallpaper.value, backgroundSize: 'cover' as const, backgroundPosition: 'center' as const };
 
   useEffect(() => {
     const t = setTimeout(() => setHintVisible(true), 1200);
@@ -102,19 +109,19 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
       onClick={onUnlock}
       style={{
         position: 'fixed', inset: 0, zIndex: 9998,
-        backgroundImage: `url('/wallpaper.png')`,
-        backgroundSize: 'cover', backgroundPosition: 'center',
+        ...bgStyle,
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         cursor: 'pointer', userSelect: 'none',
         gap: '12px',
       }}
     >
-      {/* Glass overlay */}
+      {/* Blurred overlay — no solid tint, just blur */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'rgba(0,0,0,0.28)',
-        backdropFilter: 'blur(2px)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        background: 'rgba(0,0,0,0.15)',
       }} />
 
       {/* Time + Date */}
@@ -204,6 +211,12 @@ const SignInScreen: React.FC<{ onSignIn: () => void }> = ({ onSignIn }) => {
     }
   };
 
+  const { wallpaperId } = useSettingsStore();
+  const wallpaper = WALLPAPERS.find(w => w.id === wallpaperId) ?? WALLPAPERS[0];
+  const bgStyle = wallpaper.css
+    ? { background: wallpaper.value }
+    : { backgroundImage: wallpaper.value, backgroundSize: 'cover' as const, backgroundPosition: 'center' as const };
+
   return (
     <motion.div
       key="signin"
@@ -212,8 +225,7 @@ const SignInScreen: React.FC<{ onSignIn: () => void }> = ({ onSignIn }) => {
       exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.4 } }}
       style={{
         position: 'fixed', inset: 0, zIndex: 9997,
-        backgroundImage: `url('/wallpaper.png')`,
-        backgroundSize: 'cover', backgroundPosition: 'center',
+        ...bgStyle,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}
     >
@@ -241,13 +253,11 @@ const SignInScreen: React.FC<{ onSignIn: () => void }> = ({ onSignIn }) => {
           animate={{ scale: 1, opacity: 1, transition: { delay: 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
           style={{
             width: '100px', height: '100px', borderRadius: '50%',
-            background: 'linear-gradient(145deg, #0078d4, #005a9e)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '44px',
+            overflow: 'hidden',
             boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 3px rgba(255,255,255,0.15)',
           }}
         >
-          👤
+          <img src={profileImg} alt="Anurag Sharma" draggable={false} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </motion.div>
 
         {/* Name */}

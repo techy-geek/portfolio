@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { notify } from '../../store/useNotifStore';
 
 export const Contact: React.FC = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -15,27 +14,23 @@ export const Contact: React.FC = () => {
     setTimeout(() => {
       setSubmitting(false); setSubmitted(true);
       setForm({ name: '', email: '', message: '' });
-      notify({
-        title: 'Message Sent! ✉️',
-        message: "Thanks for reaching out — I'll reply soon!",
-        type: 'success',
-        duration: 5000,
-      });
       setTimeout(() => setSubmitted(false), 3000);
     }, 1500);
   };
 
   const socials = [
-    { emoji: '🐙', label: 'GitHub',   value: 'github.com/anurag-sharma',     href: '#' },
-    { emoji: '💼', label: 'LinkedIn', value: 'linkedin.com/in/anuragsharma', href: '#' },
-    { emoji: '🐦', label: 'Twitter',  value: '@anurag_dev',                  href: '#' },
-    { emoji: '📧', label: 'Email',    value: 'hello@anurag.dev',             href: 'mailto:hello@anurag.dev' },
+    { label: 'GitHub',     value: 'github.com/techy-geek',              href: 'https://github.com/techy-geek' },
+    { label: 'LinkedIn',   value: 'linkedin.com/in/anurag-sharma-nits', href: 'https://linkedin.com/in/anurag-sharma-nits' },
+    { label: 'LeetCode',   value: 'leetcode.com/anurag-nits',           href: 'https://leetcode.com/anurag-nits' },
+    { label: 'Codeforces', value: 'codeforces.com/profile/anurag-nits', href: 'https://codeforces.com/profile/anurag-nits' },
+    { label: 'CodeChef',   value: 'codechef.com/users/anurag_nits',     href: 'https://www.codechef.com/users/anurag_nits' },
+    { label: 'Email',      value: 'anuragsharma.nits@gmail.com',        href: 'mailto:anuragsharma.nits@gmail.com' },
   ];
 
   return (
     <div className="h-full win-scrollbar overflow-y-auto win-app-body" style={{ background: 'var(--app-bg)' }}>
       <div style={{ height: '40px', background: 'var(--app-toolbar)', borderBottom: '1px solid var(--app-toolbar-border)', display: 'flex', alignItems: 'center', padding: '0 16px', flexShrink: 0 }}>
-        <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--app-text)' }}>✉️ Contact</span>
+        <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--app-text)' }}>Contact</span>
       </div>
       <div className="win-app-content">
         <div className="win-grid-contact">
@@ -55,7 +50,6 @@ export const Contact: React.FC = () => {
                 <a key={s.label} href={s.href} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 14px', borderBottom: '1px solid var(--app-sep)', textDecoration: 'none', transition: 'background 0.1s', color: 'inherit' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'var(--app-hover-bg)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                  <span style={{ fontSize: '18px' }}>{s.emoji}</span>
                   <div>
                     <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--app-text)' }}>{s.label}</div>
                     <div style={{ fontSize: '11px', color: '#0078d4' }}>{s.value}</div>
@@ -83,7 +77,7 @@ export const Contact: React.FC = () => {
               <button type="submit" disabled={submitting || submitted} className="win-btn win-btn-accent"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', height: '36px', fontSize: '13px' }}>
                 {submitting ? <div style={{ width: '16px', height: '16px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                  : submitted ? '✓ Sent Successfully!' : '📨 Send Message'}
+                  : submitted ? 'Sent Successfully' : 'Send Message'}
               </button>
             </form>
           </div>

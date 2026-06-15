@@ -6,7 +6,7 @@ import { useWindowStore } from '../../store/useWindowStore';
 interface SearchItem {
   id: string;
   title: string;
-  type: 'App' | 'Project' | 'Skill' | 'Experience' | 'Publication';
+  type: 'App' | 'Project' | 'Skill' | 'Experience';
   emoji: string;
   subtext: string;
   keywords: string[];
@@ -18,8 +18,6 @@ const APP_NAMES: Record<string, string> = {
   projects: 'Projects',
   skills: 'Skills',
   experience: 'Experience',
-  publications: 'Publications',
-  certifications: 'Certifications',
   resume: 'Resume.pdf',
   contact: 'Contact',
   terminal: 'Terminal',
@@ -32,41 +30,36 @@ const SEARCH_DATA: SearchItem[] = [
   { id: 'projects', title: 'Projects', type: 'App', emoji: '📁', subtext: 'System App • Software development portfolio', keywords: ['projects', 'apps', 'portfolio', 'code', 'github', 'live'] },
   { id: 'skills', title: 'Skills', type: 'App', emoji: '⚡', subtext: 'System App • Technical competencies & tools', keywords: ['skills', 'technologies', 'stack', 'languages', 'databases', 'devops'] },
   { id: 'experience', title: 'Experience', type: 'App', emoji: '💼', subtext: 'System App • Work history & achievements', keywords: ['experience', 'work', 'jobs', 'resume', 'history', 'career'] },
-  { id: 'publications', title: 'Publications', type: 'App', emoji: '📄', subtext: 'System App • Research papers & academic works', keywords: ['publications', 'research', 'papers', 'journals', 'academic'] },
-  { id: 'certifications', title: 'Certifications', type: 'App', emoji: '🏆', subtext: 'System App • Professional badges & courses', keywords: ['certifications', 'awards', 'courses', 'badges', 'licenses'] },
   { id: 'resume', title: 'Resume.pdf', type: 'App', emoji: '📋', subtext: 'System App • Curriculum vitae document', keywords: ['resume', 'cv', 'pdf', 'hire', 'download'] },
   { id: 'contact', title: 'Contact', type: 'App', emoji: '✉️', subtext: 'System App • Email & social communication', keywords: ['contact', 'email', 'socials', 'message', 'reach', 'github', 'linkedin'] },
   { id: 'terminal', title: 'Terminal', type: 'App', emoji: '🖥️', subtext: 'System App • Command line interface shell', keywords: ['terminal', 'cmd', 'shell', 'bash', 'command', 'cli'] },
   { id: 'settings', title: 'Settings', type: 'App', emoji: '⚙️', subtext: 'System App • Background, theme, and colors', keywords: ['settings', 'preferences', 'theme', 'dark', 'light', 'accent', 'wallpaper'] },
 
   // Projects
-  { id: 'projects', title: 'AuthFolio', type: 'Project', emoji: '🔐', subtext: 'Project • Auth boilerplate (React, Node, Express, MongoDB)', keywords: ['authfolio', 'auth', 'authentication', 'boilerplate', 'jwt', 'oauth', 'role', 'rbac', 'mongodb', 'node', 'express'] },
-  { id: 'projects', title: 'SyncSky', type: 'Project', emoji: '☁️', subtext: 'Project • Real-time editor (Next.js, Socket.io, Redis, CRDTs)', keywords: ['syncsky', 'real-time', 'collaborative', 'editor', 'websockets', 'socket.io', 'redis', 'crdt', 'nextjs', 'typescript'] },
-  { id: 'projects', title: 'NirogKaaya', type: 'Project', emoji: '🏥', subtext: 'Project • Healthcare clinic manager (React, Firebase, MUI)', keywords: ['nirogkaaya', 'healthcare', 'clinic', 'medical', 'records', 'billing', 'firebase', 'material', 'react'] },
-  { id: 'projects', title: 'CodeSnipp', type: 'Project', emoji: '📝', subtext: 'Project • Snippet sharing platform (Vue, Supabase, Tailwind)', keywords: ['codesnipp', 'snippets', 'share', 'code', 'syntax', 'vue', 'supabase', 'tailwind'] },
+  { id: 'projects', title: 'MockMate', type: 'Project', emoji: '🤖', subtext: 'Project • AI Interview Platform (Next.js 14, Convex, n8n)', keywords: ['mockmate', 'interview', 'ai', 'simulator', 'iit', 'bombay', 'techfest', 'n8n', 'convex', 'clerk', 'arcjet', 'nextjs', 'typescript'] },
+  { id: 'projects', title: 'Portfolio OS', type: 'Project', emoji: '💻', subtext: 'Project • Desktop Emulator Portfolio (React 19, Zustand)', keywords: ['portfolio', 'os', 'emulator', 'desktop', 'windows', 'react', 'zustand', 'framer motion', 'tailwind', 'typescript'] },
 
   // Skills
   { id: 'skills', title: 'React / Next.js', type: 'Skill', emoji: '🖥️', subtext: 'Frontend Skill • 90% proficiency', keywords: ['react', 'nextjs', 'frontend', 'components', 'ssr', 'hooks'] },
   { id: 'skills', title: 'TypeScript', type: 'Skill', emoji: '🖥️', subtext: 'Frontend Skill • 85% proficiency', keywords: ['typescript', 'ts', 'types', 'type safety', 'javascript'] },
-  { id: 'skills', title: 'Tailwind CSS', type: 'Skill', emoji: '🖥️', subtext: 'Frontend Skill • 95% proficiency', keywords: ['tailwind', 'css', 'styles', 'responsive', 'utility'] },
-  { id: 'skills', title: 'Vue.js', type: 'Skill', emoji: '🖥️', subtext: 'Frontend Skill • 75% proficiency', keywords: ['vue', 'vuejs', 'frontend', 'options', 'composition'] },
-  { id: 'skills', title: 'Node.js / Express', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 88% proficiency', keywords: ['node', 'nodejs', 'express', 'backend', 'api', 'server'] },
-  { id: 'skills', title: 'PostgreSQL', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 80% proficiency', keywords: ['postgresql', 'postgres', 'sql', 'database', 'relational'] },
-  { id: 'skills', title: 'MongoDB', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 85% proficiency', keywords: ['mongodb', 'mongo', 'nosql', 'database', 'document'] },
-  { id: 'skills', title: 'GraphQL', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 70% proficiency', keywords: ['graphql', 'gql', 'api', 'queries', 'mutations'] },
+  { id: 'skills', title: 'Tailwind CSS', type: 'Skill', emoji: '🖥️', subtext: 'Frontend Skill • 88% proficiency', keywords: ['tailwind', 'css', 'styles', 'responsive', 'utility'] },
+  { id: 'skills', title: 'C++', type: 'Skill', emoji: '🖥️', subtext: 'Languages Skill • 88% proficiency', keywords: ['c++', 'cpp', 'languages', 'programming'] },
+  { id: 'skills', title: 'JavaScript', type: 'Skill', emoji: '🖥️', subtext: 'Languages Skill • 90% proficiency', keywords: ['javascript', 'js', 'languages', 'programming'] },
+  { id: 'skills', title: 'Node.js / Express', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 82% proficiency', keywords: ['node', 'nodejs', 'express', 'backend', 'api', 'server'] },
+  { id: 'skills', title: 'PostgreSQL', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 78% proficiency', keywords: ['postgresql', 'postgres', 'sql', 'database', 'relational'] },
+  { id: 'skills', title: 'MongoDB', type: 'Skill', emoji: '⚙️', subtext: 'Backend Skill • 80% proficiency', keywords: ['mongodb', 'mongo', 'nosql', 'database', 'document'] },
   { id: 'skills', title: 'Git & GitHub', type: 'Skill', emoji: '🛠️', subtext: 'Tools Skill • 92% proficiency', keywords: ['git', 'github', 'version control', 'commits', 'pr'] },
-  { id: 'skills', title: 'Docker', type: 'Skill', emoji: '🛠️', subtext: 'Tools Skill • 75% proficiency', keywords: ['docker', 'containers', 'dockerfile', 'images', 'devops'] },
+  { id: 'skills', title: 'Docker', type: 'Skill', emoji: '🛠️', subtext: 'Tools Skill • 78% proficiency', keywords: ['docker', 'containers', 'dockerfile', 'images', 'devops'] },
   { id: 'skills', title: 'AWS', type: 'Skill', emoji: '🛠️', subtext: 'Tools Skill • 65% proficiency', keywords: ['aws', 'amazon', 'cloud', 's3', 'ec2', 'lambda'] },
-  { id: 'skills', title: 'CI/CD Pipeline', type: 'Skill', emoji: '🛠️', subtext: 'Tools Skill • 70% proficiency', keywords: ['cicd', 'actions', 'deploy', 'pipeline', 'automation'] },
+  { id: 'skills', title: 'Data Structures & Algorithms', type: 'Skill', emoji: '🧠', subtext: 'Core CS Skill • 90% proficiency', keywords: ['dsa', 'data structures', 'algorithms', 'problem solving'] },
+  { id: 'skills', title: 'LeetCode Profile', type: 'Skill', emoji: '🧠', subtext: 'Coding Profile • 700+ Problems Solved (@anurag-nits)', keywords: ['leetcode', 'problems', 'dsa', 'coding', 'profile'] },
+  { id: 'skills', title: 'Codeforces Profile', type: 'Skill', emoji: '🧠', subtext: 'Coding Profile • Specialist / Pupil (@anurag-nits)', keywords: ['codeforces', 'cf', 'rating', 'specialist', 'pupil', 'cp', 'competitive', 'programming'] },
+  { id: 'skills', title: 'CodeChef Profile', type: 'Skill', emoji: '🧠', subtext: 'Coding Profile • 3★ Rating (@anurag_nits)', keywords: ['codechef', 'rating', '3 star', 'stars', 'cp', 'competitive'] },
 
   // Experience
-  { id: 'experience', title: 'Senior Software Engineer', type: 'Experience', emoji: '💼', subtext: 'Experience • TechNova Solutions (San Francisco, CA)', keywords: ['senior', 'engineer', 'technova', 'solutions', 'microservices', 'ssr', 'caching', 'mentor', 'architect'] },
-  { id: 'experience', title: 'Full Stack Developer', type: 'Experience', emoji: '💼', subtext: 'Experience • CloudScale Inc (New York, NY)', keywords: ['fullstack', 'developer', 'cloudscale', 'dashboards', 'stripe', 'payments', 'aws', 'lambda', 'serverless'] },
-  { id: 'experience', title: 'Frontend Web Intern', type: 'Experience', emoji: '💼', subtext: 'Experience • Creative Web Agency (Austin, TX)', keywords: ['intern', 'frontend', 'creative', 'web', 'agency', 'landing', 'html', 'css', 'javascript'] },
+  { id: 'experience', title: 'Web Developer Intern', type: 'Experience', emoji: '💼', subtext: 'Experience • Underrated Academia (Remote)', keywords: ['web', 'developer', 'intern', 'underrated', 'academia', 'sql', 'docker', 'ci/cd', 'gitlab'] },
+  { id: 'experience', title: 'Web Developer', type: 'Experience', emoji: '💼', subtext: 'Experience • ICRAME-2026 (On-site)', keywords: ['web', 'developer', 'icrame', 'conference', 'website', 'html', 'css', 'javascript'] },
 
-  // Publications
-  { id: 'publications', title: 'Optimizing Serverless Cold Starts', type: 'Publication', emoji: '📄', subtext: 'Publication • Journal of Cloud Computing Advances', keywords: ['cold starts', 'serverless', 'edge', 'computing', 'pre-warming', 'container', 'snapshots'] },
-  { id: 'publications', title: 'State Management in Modern Web Frameworks', type: 'Publication', emoji: '📄', subtext: 'Publication • ICWE Conference', keywords: ['state management', 'web frameworks', 'react', 'vue', 'angular', 'comparative', 'study'] }
 ];
 
 const SEARCH_TABS = ['All', 'Apps', 'Projects', 'Skills'] as const;

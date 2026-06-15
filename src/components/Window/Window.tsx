@@ -3,6 +3,11 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { useWindowStore } from '../../store/useWindowStore';
 
+import folderIcon from '../../assets/folder.png';
+import terminalIcon from '../../assets/terminal.png';
+import settingIcon from '../../assets/setting.png';
+import pdfIcon from '../../assets/pdf.png';
+
 interface WindowProps {
   id: string;
   title: string;
@@ -35,15 +40,15 @@ const CloseIcon = () => (
   </svg>
 );
 
-const APP_META: Record<string, { title: string }> = {
-  about:          { title: 'About Me' },
-  projects:       { title: 'Projects' },
-  skills:         { title: 'Skills' },
-  experience:     { title: 'Experience' },
-  publications:   { title: 'Publications' },
-  certifications: { title: 'Certifications' },
-  resume:         { title: 'Resume.pdf — PDF Reader' },
-  contact:        { title: 'Contact' },
+const APP_META: Record<string, { title: string; icon: string }> = {
+  about:      { title: 'About Me',              icon: folderIcon   },
+  projects:   { title: 'Projects',              icon: folderIcon   },
+  skills:     { title: 'Skills',                icon: folderIcon   },
+  experience: { title: 'Experience',            icon: folderIcon   },
+  resume:     { title: 'Resume.pdf — PDF Reader', icon: pdfIcon      },
+  contact:    { title: 'Contact',               icon: folderIcon   },
+  terminal:   { title: 'Terminal',              icon: terminalIcon },
+  settings:   { title: 'Settings',              icon: settingIcon  },
 };
 
 /* ── Control Button ── */
@@ -209,8 +214,10 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
   };
 
   /* ── Drag ── */
+  const isMobile = window.innerWidth < 768;
+
   const onTitleBarMouseDown = (e: React.MouseEvent) => {
-    if (isMaximized || e.button !== 0) return;
+    if (isMaximized || isMobile || e.button !== 0) return;
     e.preventDefault();
     focusWindow(id);
 
@@ -229,7 +236,7 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
 
   /* ── Resize ── */
   const onResizeMouseDown = (e: React.MouseEvent, dir: Dir) => {
-    if (isMaximized || e.button !== 0) return;
+    if (isMaximized || isMobile || e.button !== 0) return;
     e.preventDefault();
     e.stopPropagation();
     focusWindow(id);
@@ -266,10 +273,10 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
   /* ── Container style ── */
   const containerStyle: React.CSSProperties = {
     position: 'absolute',
-    left:   isMaximized ? 0      : pos.x,
-    top:    isMaximized ? 0      : pos.y,
-    width:  isMaximized ? '100%' : size.w,
-    height: isMaximized ? '100%' : size.h,
+    left:   (isMaximized || isMobile) ? 0      : pos.x,
+    top:    (isMaximized || isMobile) ? 0      : pos.y,
+    width:  (isMaximized || isMobile) ? '100%' : size.w,
+    height: (isMaximized || isMobile) ? '100%' : size.h,
     zIndex,
     display: 'flex',
     flexDirection: 'column',
@@ -291,7 +298,7 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
       onMouseDown={() => focusWindow(id)}
     >
       {/* ── Resize handles ── */}
-      {!isMaximized && <>
+      {!isMaximized && !isMobile && <>
         {handle('n',  { top: 0,    left: CH, right: CH, height: RH })}
         {handle('s',  { bottom: 0, left: CH, right: CH, height: RH })}
         {handle('e',  { right: 0,  top: CH, bottom: CH, width: RH  })}
@@ -306,13 +313,13 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
       <div style={{
         position: 'absolute', inset: 0,
         display: 'flex', flexDirection: 'column',
-        borderRadius: isMaximized ? '0' : '8px',
+        borderRadius: (isMaximized || isMobile) ? '0' : '8px',
         overflow: 'hidden',
         boxShadow: isActive
           ? '0 24px 60px rgba(0,0,0,0.34), 0 6px 16px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.13)'
           : '0 6px 20px rgba(0,0,0,0.18), 0 1px 6px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.09)',
         transition: 'box-shadow 0.2s ease, border-radius 0.28s cubic-bezier(0.4,0,0.2,1)',
-        borderTop: isActive && !isMaximized ? '1px solid #0067c0' : 'none',
+        borderTop: isActive && !isMaximized && !isMobile ? '1px solid #0067c0' : 'none',
       }}>
 
         {/* ── Title Bar ── */}
@@ -320,7 +327,7 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
           style={{
             height: '32px', display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', flexShrink: 0,
-            cursor: isMaximized ? 'default' : 'move',
+            cursor: (isMaximized || isMobile) ? 'default' : 'move',
             userSelect: 'none',
             background: isActive ? 'rgba(239,239,239,0.95)' : 'rgba(234,234,234,0.88)',
             backdropFilter: 'blur(44px) saturate(160%)',
@@ -328,10 +335,10 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
             borderBottom: '1px solid rgba(0,0,0,0.08)',
           }}
           onMouseDown={onTitleBarMouseDown}
-          onDoubleClick={handleMaximize}
+          onDoubleClick={isMobile ? undefined : handleMaximize}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '7px', paddingLeft: '10px', flex: 1, minWidth: 0 }}>
-            <img src={`/icons/${id}.png`} alt="" draggable={false}
+            <img src={meta.icon ?? '/icons/folder.png'} alt="" draggable={false}
               style={{ width: '16px', height: '16px', objectFit: 'contain', flexShrink: 0 }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
             <span style={{
@@ -346,9 +353,11 @@ export const Window: React.FC<WindowProps> = ({ id, title, children }) => {
 
           <div style={{ display: 'flex', height: '100%' }}>
             <CtrlBtn onClick={handleMinimize} title="Minimize"><MinimizeIcon /></CtrlBtn>
-            <CtrlBtn onClick={handleMaximize} title={isMaximized ? 'Restore' : 'Maximize'}>
-              {isMaximized ? <RestoreIcon /> : <MaximizeIcon />}
-            </CtrlBtn>
+            {!isMobile && (
+              <CtrlBtn onClick={handleMaximize} title={isMaximized ? 'Restore' : 'Maximize'}>
+                {isMaximized ? <RestoreIcon /> : <MaximizeIcon />}
+              </CtrlBtn>
+            )}
             <CtrlBtn onClick={handleClose} isClose title="Close"><CloseIcon /></CtrlBtn>
           </div>
         </div>

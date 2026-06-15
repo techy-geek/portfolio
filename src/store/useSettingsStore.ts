@@ -2,14 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export const WALLPAPERS = [
-  { id: 'default',  label: 'Default',   value: 'url("/wallpaper.png")',                                                                                              css: false },
-  { id: 'aurora',   label: 'Aurora',    value: 'linear-gradient(135deg,#0d1117 0%,#0d3b2e 30%,#0d4f6b 60%,#1e1b4b 100%)',                                           css: true  },
-  { id: 'cosmos',   label: 'Cosmos',    value: 'radial-gradient(ellipse at 25% 60%,#4a1a6e 0%,#1a0a3e 40%,#050510 80%)',                                             css: true  },
-  { id: 'sunset',   label: 'Sunset',    value: 'linear-gradient(160deg,#1a0a2e 0%,#3d1a56 25%,#7c3aed 55%,#db2777 80%,#f59e0b 100%)',                               css: true  },
-  { id: 'ocean',    label: 'Ocean',     value: 'linear-gradient(160deg,#020c1b 0%,#0a2540 35%,#0d6efd 70%,#06b6d4 100%)',                                            css: true  },
-  { id: 'forest',   label: 'Forest',    value: 'linear-gradient(135deg,#0a1628 0%,#0d3b2a 35%,#166534 60%,#15803d 100%)',                                            css: true  },
-  { id: 'volcano',  label: 'Volcano',   value: 'radial-gradient(ellipse at 50% 100%,#7f1d1d 0%,#991b1b 25%,#450a0a 55%,#0c0a09 100%)',                              css: true  },
-  { id: 'midnight', label: 'Midnight',  value: 'linear-gradient(135deg,#000000 0%,#0d1117 40%,#111827 70%,#1e1b4b 100%)',                                            css: true  },
+  { id: 'wallpaper1', label: 'Wallpaper 1', value: 'url("/wallpaper1.png")', css: false },
+  { id: 'wallpaper2', label: 'Wallpaper 2', value: 'url("/wallpaper2.png")', css: false },
+  { id: 'wallpaper3', label: 'Wallpaper 3', value: 'url("/wallpaper3.png")', css: false },
+  { id: 'wallpaper4', label: 'Wallpaper 4', value: 'url("/wallpaper4.png")', css: false },
 ] as const;
 
 export const ACCENT_COLORS = [
@@ -37,7 +33,7 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      wallpaperId: 'default',
+      wallpaperId: 'wallpaper1',
       accentColor: '#0078d4',
       setWallpaper: (wallpaperId) => set({ wallpaperId }),
       setAccent:    (accentColor) => set({ accentColor }),

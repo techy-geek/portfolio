@@ -6,6 +6,22 @@ import { useThemeStore } from '../../store/useThemeStore';
 import { AnimatePresence } from 'framer-motion';
 import { SearchPopup } from './SearchPopup';
 
+import folderIcon from '../../assets/folder.png';
+import terminalIcon from '../../assets/terminal.png';
+import settingIcon from '../../assets/setting.png';
+import pdfIcon from '../../assets/pdf.png';
+
+const ICON_MAP: Record<string, string> = {
+  about: folderIcon,
+  projects: folderIcon,
+  skills: folderIcon,
+  experience: folderIcon,
+  resume: pdfIcon,
+  contact: folderIcon,
+  terminal: terminalIcon,
+  settings: settingIcon,
+};
+
 /* ── SVG Icon Components ── */
 
 const WinLogo = () => (
@@ -48,17 +64,11 @@ const BatterySvg = () => (
   </svg>
 );
 
-const NotifSvg = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M7.5 1.5a5 5 0 00-5 5v3l-1 1.5h12l-1-1.5v-3a5 5 0 00-5-5z" stroke="rgba(255,255,255,0.80)" strokeWidth="1.2" fill="none" strokeLinejoin="round"/>
-    <path d="M6 11.5a1.5 1.5 0 003 0" stroke="rgba(255,255,255,0.80)" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>
-);
 
 /* ── Icon image ── */
 const WindowIcon: React.FC<{ id: string; size?: number }> = ({ id, size = 20 }) => (
   <img
-    src={`/icons/${id}.png`}
+    src={ICON_MAP[id] ?? `/icons/${id}.png`}
     alt={id}
     draggable={false}
     style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }}
@@ -451,7 +461,6 @@ export const Taskbar: React.FC = () => {
         paddingRight: '4px',
         height: '100%',
       }}>
-        <TrayBtn title="Notifications"><NotifSvg /></TrayBtn>
         <TrayBtn title="Volume"><VolumeSvg /></TrayBtn>
         <TrayBtn title="Network"><WifiSvg /></TrayBtn>
         <TrayBtn title="Battery"><BatterySvg /></TrayBtn>

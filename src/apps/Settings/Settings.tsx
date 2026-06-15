@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useThemeStore } from '../../store/useThemeStore';
 import { useSettingsStore, WALLPAPERS, ACCENT_COLORS, applyAccent } from '../../store/useSettingsStore';
-import { notify } from '../../store/useNotifStore';
 
 type Section = 'personalization' | 'colors' | 'background' | 'about';
 
-const NAV: { id: Section; icon: string; label: string }[] = [
-  { id: 'personalization', icon: '🎨', label: 'Personalization'  },
-  { id: 'colors',          icon: '🌈', label: 'Colors'           },
-  { id: 'background',      icon: '🖼️', label: 'Background'       },
-  { id: 'about',           icon: 'ℹ️', label: 'About'            },
+const NAV: { id: Section; label: string }[] = [
+  { id: 'personalization', label: 'Personalization' },
+  { id: 'colors',          label: 'Colors'          },
+  { id: 'background',      label: 'Background'      },
+  { id: 'about',           label: 'About'           },
 ];
 
 export const Settings: React.FC = () => {
@@ -20,12 +19,10 @@ export const Settings: React.FC = () => {
   const handleAccent = (color: string) => {
     setAccent(color);
     applyAccent(color);
-    notify({ title: 'Accent Color', message: 'Accent color updated', type: 'success', duration: 2500 });
   };
 
   const handleWallpaper = (id: typeof WALLPAPERS[number]['id']) => {
     setWallpaper(id);
-    notify({ title: 'Background', message: 'Wallpaper changed', type: 'info', duration: 2500 });
   };
 
   return (
@@ -34,7 +31,7 @@ export const Settings: React.FC = () => {
       {/* Sidebar */}
       <div style={{ width: '220px', flexShrink: 0, borderRight: '1px solid var(--app-toolbar-border)', background: 'var(--app-toolbar)', padding: '8px', display: 'flex', flexDirection: 'column', gap: '2px', overflowY: 'auto' }}>
         <div style={{ padding: '10px 12px 14px', borderBottom: '1px solid var(--app-sep)', marginBottom: '4px' }}>
-          <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--app-text)' }}>⚙️ Settings</div>
+          <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--app-text)' }}>Settings</div>
           <div style={{ fontSize: '11px', color: 'var(--app-text-sec)', marginTop: '2px' }}>Portfolio v2.0</div>
         </div>
         {NAV.map(n => (
@@ -53,7 +50,6 @@ export const Settings: React.FC = () => {
             onMouseEnter={e => { if (section !== n.id) (e.currentTarget.style.background = 'var(--app-hover-bg)'); }}
             onMouseLeave={e => { if (section !== n.id) (e.currentTarget.style.background = 'transparent'); }}
           >
-            <span style={{ fontSize: '16px' }}>{n.icon}</span>
             {n.label}
           </button>
         ))}
@@ -67,11 +63,11 @@ export const Settings: React.FC = () => {
           <>
             <SectionHeader title="Personalization" desc="Customize the look and feel of your portfolio" />
 
-            <SettingCard title="Dark Mode" desc={isDark ? 'Currently using dark theme' : 'Currently using light theme'} icon="🌙">
+            <SettingCard title="Dark Mode" desc={isDark ? 'Currently using dark theme' : 'Currently using light theme'}>
               <ToggleSwitch value={isDark} onChange={toggleDark} />
             </SettingCard>
 
-            <SettingCard title="App Theme" desc="The overall color scheme follows your dark/light mode choice" icon="🎨">
+            <SettingCard title="App Theme" desc="The overall color scheme follows your dark/light mode choice">
               <div style={{ display: 'flex', gap: '8px' }}>
                 {['Light', 'Dark'].map(t => (
                   <button key={t} onClick={() => { if ((t === 'Dark') !== isDark) toggleDark(); }}
@@ -82,13 +78,13 @@ export const Settings: React.FC = () => {
                       color: (t === 'Dark') === isDark ? 'var(--win-accent)' : 'var(--app-text)',
                       cursor: 'pointer', outline: 'none', transition: 'all 0.15s',
                     }}>
-                    {t === 'Light' ? '☀️' : '🌙'} {t}
+                    {t === 'Light' ? 'Light' : 'Dark'}
                   </button>
                 ))}
               </div>
             </SettingCard>
 
-            <SettingCard title="Transparency & Effects" desc="Glass morphism effects on windows and taskbar" icon="✨">
+            <SettingCard title="Transparency & Effects" desc="Glass morphism effects on windows and taskbar">
               <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--win-accent)', background: 'var(--app-tag-bg)', padding: '4px 12px', borderRadius: '4px', border: '1px solid var(--app-tag-border)' }}>
                 Always On
               </div>
@@ -138,25 +134,24 @@ export const Settings: React.FC = () => {
         {section === 'background' && (
           <>
             <SectionHeader title="Background" desc="Choose your desktop wallpaper" />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
-              {WALLPAPERS.map(w => (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '12px' }}>
+              {WALLPAPERS.map((w, i) => (
                 <button key={w.id} onClick={() => handleWallpaper(w.id)}
                   style={{
-                    border: 'none', padding: 0, cursor: 'pointer', borderRadius: '8px',
+                    border: 'none', padding: 0, cursor: 'pointer', borderRadius: '10px',
                     outline: wallpaperId === w.id ? `3px solid var(--win-accent)` : '2px solid transparent',
-                    outlineOffset: '2px', overflow: 'hidden', transition: 'transform 0.15s, outline 0.15s',
+                    outlineOffset: '3px', overflow: 'hidden', transition: 'transform 0.15s, outline 0.15s',
                     transform: wallpaperId === w.id ? 'scale(1.04)' : 'scale(1)',
                     boxShadow: wallpaperId === w.id ? '0 4px 16px rgba(0,120,212,0.3)' : 'var(--app-card-shadow)',
                   }}
                 >
                   <div style={{
                     width: '100%', aspectRatio: '16/9',
-                    background: w.css ? w.value : undefined,
-                    backgroundImage: !w.css ? w.value : undefined,
+                    backgroundImage: w.value,
                     backgroundSize: 'cover', backgroundPosition: 'center',
                   }} />
                   <div style={{ padding: '6px 8px', background: 'var(--app-card)', fontSize: '11px', fontWeight: 600, color: 'var(--app-text)', textAlign: 'center' }}>
-                    {w.label}
+                    {i + 1}
                   </div>
                 </button>
               ))}
@@ -169,14 +164,14 @@ export const Settings: React.FC = () => {
           <>
             <SectionHeader title="About" desc="Portfolio system information" />
             {[
-              { label: '👤 Developer',    value: 'Anurag Sharma' },
-              { label: '💻 Framework',    value: 'React 18 + TypeScript 5' },
-              { label: '🎨 UI Library',   value: 'Framer Motion + Custom CSS' },
-              { label: '🗄️ State',        value: 'Zustand v5' },
-              { label: '📦 Bundler',      value: 'Vite 8' },
-              { label: '🌐 Theme',        value: 'Windows 11 (custom)' },
-              { label: '📅 Version',      value: 'v2.0 — 2026' },
-              { label: '📧 Contact',      value: 'hello@anurag.dev' },
+              { label: 'Developer',  value: 'Anurag Sharma' },
+              { label: 'Framework',  value: 'React 18 + TypeScript 5' },
+              { label: 'UI Library', value: 'Framer Motion + Custom CSS' },
+              { label: 'State',      value: 'Zustand v5' },
+              { label: 'Bundler',    value: 'Vite 8' },
+              { label: 'Theme',      value: 'Windows 11 (custom)' },
+              { label: 'Version',    value: 'v2.0 — 2026' },
+              { label: 'Contact',    value: 'anuragsharma.nits@gmail.com' },
             ].map(row => (
               <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'var(--app-card)', border: '1px solid var(--app-card-border)', borderRadius: '6px', boxShadow: 'var(--app-card-shadow)' }}>
                 <span style={{ fontSize: '13px', color: 'var(--app-text-sec)' }}>{row.label}</span>
@@ -199,9 +194,8 @@ const SectionHeader: React.FC<{ title: string; desc: string }> = ({ title, desc 
   </div>
 );
 
-const SettingCard: React.FC<{ title: string; desc: string; icon: string; children: React.ReactNode }> = ({ title, desc, icon, children }) => (
+const SettingCard: React.FC<{ title: string; desc: string; children: React.ReactNode }> = ({ title, desc, children }) => (
   <div style={{ background: 'var(--app-card)', border: '1px solid var(--app-card-border)', borderRadius: '8px', padding: '14px 16px', boxShadow: 'var(--app-card-shadow)', display: 'flex', alignItems: 'center', gap: '14px' }}>
-    <span style={{ fontSize: '22px', flexShrink: 0 }}>{icon}</span>
     <div style={{ flex: 1, minWidth: 0 }}>
       <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--app-text)' }}>{title}</div>
       <div style={{ fontSize: '12px', color: 'var(--app-text-sec)', marginTop: '2px' }}>{desc}</div>

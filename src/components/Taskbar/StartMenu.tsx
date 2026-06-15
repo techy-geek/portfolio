@@ -1,17 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useWindowStore } from '../../store/useWindowStore';
+import { APPS } from '../Desktop/Desktop';
 
-/* ── All portfolio apps ── */
-const APPS = [
-  { id: 'about',          name: 'About Me',       emoji: '👤' },
-  { id: 'projects',       name: 'Projects',        emoji: '📁' },
-  { id: 'skills',         name: 'Skills',          emoji: '⚡' },
-  { id: 'experience',     name: 'Experience',      emoji: '💼' },
-  { id: 'publications',   name: 'Publications',    emoji: '📄' },
-  { id: 'certifications', name: 'Certifications',  emoji: '🏆' },
-  { id: 'resume',         name: 'Resume.pdf',      emoji: '📋' },
-  { id: 'contact',        name: 'Contact',         emoji: '✉️' },
-];
 
 /* ── SVG icons ── */
 const PowerIcon = () => (
@@ -67,7 +57,7 @@ const AppTile: React.FC<{
         position: 'relative',
       }}>
         <img
-          src={`/icons/${app.id}.png`}
+          src={app.icon}
           alt={app.name}
           draggable={false}
           style={{ width: '36px', height: '36px', objectFit: 'contain' }}
